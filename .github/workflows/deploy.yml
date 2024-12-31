@@ -40,6 +40,8 @@ jobs:
           tree dist
           echo "Checking file permissions:"
           ls -l dist
+          echo "Checking file sizes:"
+          du -sh dist/*
           
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -51,3 +53,4 @@ jobs:
           keep_files: true
           verbose: true
           cname: lista-compras-01.fbiluoficial.github.io
+          deploy_key: ${{ secrets.DEPLOY_KEY }}
