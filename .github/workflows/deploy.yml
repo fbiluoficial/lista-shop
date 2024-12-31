@@ -26,9 +26,19 @@ jobs:
       - name: List build files
         run: ls -la dist
         
+      - name: Verify build output
+        run: |
+          echo "Build directory contents:"
+          ls -la dist
+          echo "Checking index.html:"
+          cat dist/index.html
+          echo "Checking assets:"
+          ls -la dist/assets
+          
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           force_orphan: true
+          enable_jekyll: false
