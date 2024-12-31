@@ -36,6 +36,8 @@ jobs:
           ls -la dist/assets
           echo "Checking main.js:"
           cat dist/assets/main.*.js
+          echo "Full directory tree:"
+          tree dist
           
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -45,3 +47,4 @@ jobs:
           force_orphan: true
           enable_jekyll: false
           keep_files: true
+          verbose: true
