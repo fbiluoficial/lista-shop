@@ -7,6 +7,7 @@ export default defineConfig({
   server: {
     port: 5144,
   },
+  base: '/lista-compras-01/',
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
