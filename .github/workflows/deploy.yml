@@ -52,5 +52,4 @@ jobs:
           enable_jekyll: false
           keep_files: true
           verbose: true
-          cname: lista-compras-01.fbiluoficial.github.io
           deploy_key: ${{ secrets.DEPLOY_KEY }}
