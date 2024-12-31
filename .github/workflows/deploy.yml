@@ -38,6 +38,8 @@ jobs:
           cat dist/assets/main.*.js
           echo "Full directory tree:"
           tree dist
+          echo "Checking file permissions:"
+          ls -l dist
           
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -48,3 +50,4 @@ jobs:
           enable_jekyll: false
           keep_files: true
           verbose: true
+          cname: lista-compras-01.fbiluoficial.github.io
