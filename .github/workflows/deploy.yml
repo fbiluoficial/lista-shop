@@ -34,6 +34,8 @@ jobs:
           cat dist/index.html
           echo "Checking assets:"
           ls -la dist/assets
+          echo "Checking main.js:"
+          cat dist/assets/main.*.js
           
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -42,3 +44,4 @@ jobs:
           publish_dir: ./dist
           force_orphan: true
           enable_jekyll: false
+          keep_files: true
