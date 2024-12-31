@@ -1,48 +1,49 @@
-name: Deploy
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-      
-      - name: Setup Node
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'npm'
-          
+          cache-dependency-path: 'package-lock.json'
+
       - name: Install dependencies
-        run: npm install
-        
+        run: npm ci
+
       - name: Build project
         run: npm run build
-        
-      - name: List build files
-        run: ls -la dist
-        
+        env:
+          NODE_ENV: production
+          VITE_BASE_PATH: '/lista-compras-01/'
+
       - name: Verify build output
         run: |
-          echo "Build directory contents:"
-          ls -la dist
+          echo "Build directory structure:"
+          tree dist
           echo "Checking index.html:"
           cat dist/index.html
           echo "Checking assets:"
           ls -la dist/assets
-          echo "Checking main.js:"
-          cat dist/assets/main.*.js
-          echo "Full directory tree:"
-          tree dist
           echo "Checking file permissions:"
           ls -l dist
           echo "Checking file sizes:"
           du -sh dist/*
-          
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
@@ -52,4 +53,11 @@ jobs:
           enable_jekyll: false
           keep_files: true
           verbose: true
-          deploy_key: ${{ secrets.DEPLOY_KEY }}
+          cname: lista-compras-01.fbiluoficial.github.io
+
+      - name: Verify deployment
+        run: |
+          echo "Deployment URL:"
+          echo "https://fbiluoficial.github.io/lista-compras-01/"
+          echo "Checking deployment status..."
+          curl -I https://fbiluoficial.github.io/lista-compras-01/

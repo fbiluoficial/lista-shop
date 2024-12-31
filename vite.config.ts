@@ -7,6 +7,7 @@ export default defineConfig({
   server: {
     port: 5144,
   },
+  base: process.env.VITE_BASE_PATH || '/',
   build: {
     outDir: 'dist',
     emptyOutDir: true,
