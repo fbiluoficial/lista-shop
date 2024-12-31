@@ -7,7 +7,6 @@ export default defineConfig({
   server: {
     port: 5144,
   },
-  base: '/lista-compras-01/',
   build: {
     outDir: 'dist',
     emptyOutDir: true,
