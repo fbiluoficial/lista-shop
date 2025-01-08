@@ -5,6 +5,9 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -12,15 +15,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'npm'
-          cache-dependency-path: 'package-lock.json'
 
       - name: Install dependencies
         run: npm ci
@@ -29,20 +29,6 @@ jobs:
         run: npm run build
         env:
           NODE_ENV: production
-          VITE_BASE_PATH: '/lista-shop/'
-
-      - name: Verify build output
-        run: |
-          echo "Build directory structure:"
-          tree dist
-          echo "Checking index.html:"
-          cat dist/index.html
-          echo "Checking assets:"
-          ls -la dist/assets
-          echo "Checking file permissions:"
-          ls -l dist
-          echo "Checking file sizes:"
-          du -sh dist/*
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -50,14 +36,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           force_orphan: true
-          enable_jekyll: false
-          keep_files: true
-          verbose: true
-          cname: lista-compras-01.fbiluoficial.github.io
-
-      - name: Verify deployment
-        run: |
-          echo "Deployment URL:"
-          echo "https://fbiluoficial.github.io/lista-compras-01/"
-          echo "Checking deployment status..."
-          curl -I https://fbiluoficial.github.io/lista-compras-01/
