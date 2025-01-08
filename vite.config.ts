@@ -5,12 +5,15 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   base: '/lista-shop/',
-  server: {
-    port: 5144,
-  },
   build: {
     outDir: 'dist',
+    assetsDir: 'assets',
     emptyOutDir: true,
     sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined
+      }
+    }
   }
 });
