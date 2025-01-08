@@ -29,7 +29,7 @@ jobs:
         run: npm run build
         env:
           NODE_ENV: production
-          VITE_BASE_PATH: '/lista-compras-01/'
+          VITE_BASE_PATH: '/lista-shop/'
 
       - name: Verify build output
         run: |
